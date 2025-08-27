@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="mni">
+<head>
+  <meta charset="UTF-8">
+  <title>Text Replacer (Meetei Mayek)</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      margin-bottom: 15px;
+      font-size: 18px;
+      padding: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔄 Meetei Mayek Text Replacer</h1>
+
+  <textarea id="inputText" placeholder="Paste your text here..."></textarea>
+  <br>
+  <button onclick="replaceText()">Replace</button>
+  <br><br>
+  <textarea id="outputText" placeholder="Result will appear here..." readonly></textarea>
+
+  <script src="script.js"></script>
+</body>
+</html>
