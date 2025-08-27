@@ -2,35 +2,115 @@
 <html lang="mni">
 <head>
   <meta charset="UTF-8">
-  <title>Text Replacer (Meetei Mayek)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meetei Mayek Text Replacer</title>
   <style>
     body {
-      font-family: sans-serif;
-      padding: 20px;
-      background: #f5f5f5;
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9fafb;
+      color: #111;
     }
+
+    header {
+      background: #2563eb;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+
+    main {
+      padding: 15px;
+      max-width: 800px;
+      margin: auto;
+    }
+
     textarea {
       width: 100%;
-      height: 200px;
-      margin-bottom: 15px;
-      font-size: 18px;
-      padding: 10px;
+      min-height: 150px;
+      resize: vertical;
+      margin: 10px 0;
+      font-size: 1.1rem;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
     }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
+
+    button, input[type="file"], select {
+      width: 100%;
+      padding: 15px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 10px;
+      background: #2563eb;
+      color: white;
       cursor: pointer;
+      transition: background 0.2s;
+      margin: 5px 0;
+    }
+
+    button:hover, select:hover {
+      background: #1e40af;
+    }
+
+    button.clear-btn {
+      background: #dc2626;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    @media (min-width: 600px) {
+      button, input[type="file"], select {
+        width: auto;
+        padding: 12px 25px;
+        margin-right: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>🔄 Meetei Mayek Text Replacer</h1>
+  <header>🔄 Meetei Mayek Text Replacer</header>
 
-  <textarea id="inputText" placeholder="Paste your text here..."></textarea>
-  <br>
-  <button onclick="replaceText()">Replace</button>
-  <br><br>
-  <textarea id="outputText" placeholder="Result will appear here..." readonly></textarea>
+  <main>
+    <label for="inputText">Paste your text:</label>
+    <textarea id="inputText" placeholder="ꯅꯣꯪ ꯑꯣꯏ ꯅꯣꯪꯔꯤ ..."></textarea>
+
+    <button onclick="replaceText()">Replace</button>
+
+    <label for="outputText">Result:</label>
+    <textarea id="outputText" readonly placeholder="Result will appear here..."></textarea>
+
+    <hr>
+
+    <h3>📂 Upload & Download Text Files</h3>
+    <input type="file" id="fileInput" accept=".txt">
+    <button onclick="processFile()">Process File</button>
+    <button onclick="downloadFile()">Download Corrected File</button>
+
+    <hr>
+
+    <h3>📑 Upload Custom Dictionary (.csv)</h3>
+    <input type="file" id="csvInput" accept=".csv">
+    <button onclick="uploadCSV()">Upload CSV Dictionary</button>
+    <button class="clear-btn" onclick="clearCustomDict()">Clear Saved Dictionary</button>
+
+    <h3>⚙️ Dictionary Mode</h3>
+    <select id="dictMode" onchange="updateDictionaryMode()">
+      <option value="both" selected>Default + Custom</option>
+      <option value="default">Default Only</option>
+      <option value="custom">Custom Only</option>
+    </select>
+  </main>
+
+  <footer>© 2025 Awangbam Angang — GitHub Pages</footer>
 
   <script src="script.js"></script>
 </body>
