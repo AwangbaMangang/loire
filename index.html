@@ -6,10 +6,10 @@
   <title>Meetei Mayek Text Replacer</title>
   <style>
     body {
-      font-family: system-ui, sans-serif;
+      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background: #f9fafb;
+      padding: 10px;
+      background: #f9f9f9;
       color: #111;
     }
 
@@ -19,12 +19,13 @@
       padding: 15px;
       text-align: center;
       font-size: 1.2rem;
+      border-radius: 0 0 10px 10px;
     }
 
     main {
-      padding: 15px;
       max-width: 800px;
       margin: auto;
+      padding: 15px;
     }
 
     textarea {
@@ -39,25 +40,64 @@
       box-sizing: border-box;
     }
 
-    button, input[type="file"], select {
-      width: 100%;
-      padding: 15px;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 10px;
-      background: #2563eb;
-      color: white;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin: 5px 0;
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 0;
+      margin-bottom: 20px;
+      overflow: hidden;
     }
 
-    button:hover, select:hover {
-      background: #1e40af;
+    .card-header {
+      padding: 15px;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .card-content {
+      padding: 15px;
+      display: none; /* Hidden by default */
+    }
+
+    h2, h3 {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    button, select, input[type="file"] {
+      width: 100%;
+      padding: 12px;
+      margin: 5px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #1d4ed8;
     }
 
     button.clear-btn {
       background: #dc2626;
+      color: white;
+    }
+
+    input[type="file"] {
+      display: block;
     }
 
     footer {
@@ -66,52 +106,78 @@
       font-size: 0.9rem;
       color: #555;
     }
-
-    @media (min-width: 600px) {
-      button, input[type="file"], select {
-        width: auto;
-        padding: 12px 25px;
-        margin-right: 10px;
-      }
-    }
   </style>
 </head>
 <body>
-  <header>🔄 Meetei Mayek Text Replacer</header>
 
-  <main>
-    <label for="inputText">Paste your text:</label>
-    <textarea id="inputText" placeholder="ꯅꯣꯪ ꯑꯣꯏ ꯅꯣꯪꯔꯤ ..."></textarea>
+<header>🔄 Meetei Mayek Text Replacer</header>
 
-    <button onclick="replaceText()">Replace</button>
+<main>
 
-    <label for="outputText">Result:</label>
-    <textarea id="outputText" readonly placeholder="Result will appear here..."></textarea>
+  <!-- Text input/output -->
+  <label for="inputText">Paste your text:</label>
+  <textarea id="inputText" placeholder="ꯅꯣꯪ ꯑꯣꯏ ꯅꯣꯪꯔꯤ ..."></textarea>
+  <button onclick="replaceText()">Replace</button>
+  <label for="outputText">Result:</label>
+  <textarea id="outputText" readonly placeholder="Result will appear here..."></textarea>
 
-    <hr>
+  <!-- Collapsible Dictionary Settings Card -->
+  <div class="card">
+    <div class="card-header" onclick="toggleCard(this)">
+      ⚙️ Dictionary Settings
+      <span id="toggleIcon">▼</span>
+    </div>
+    <div class="card-content">
 
-    <h3>📂 Upload & Download Text Files</h3>
-    <input type="file" id="fileInput" accept=".txt">
-    <button onclick="processFile()">Process File</button>
-    <button onclick="downloadFile()">Download Corrected File</button>
+      <!-- Dictionary mode -->
+      <label for="dictMode">Mode:</label>
+      <select id="dictMode" onchange="updateDictionaryMode()">
+        <option value="both" selected>Default + Custom</option>
+        <option value="default">Default Only</option>
+        <option value="custom">Custom Only</option>
+      </select>
 
-    <hr>
+      <!-- Active dictionary counter -->
+      <p>📊 Active Entries: <span id="entryCount">0</span></p>
 
-    <h3>📑 Upload Custom Dictionary (.csv)</h3>
-    <input type="file" id="csvInput" accept=".csv">
-    <button onclick="uploadCSV()">Upload CSV Dictionary</button>
-    <button class="clear-btn" onclick="clearCustomDict()">Clear Saved Dictionary</button>
+      <hr>
 
-    <h3>⚙️ Dictionary Mode</h3>
-    <select id="dictMode" onchange="updateDictionaryMode()">
-      <option value="both" selected>Default + Custom</option>
-      <option value="default">Default Only</option>
-      <option value="custom">Custom Only</option>
-    </select>
-  </main>
+      <!-- Upload & download text file -->
+      <h3>📂 Upload & Download Text</h3>
+      <input type="file" id="fileInput" accept=".txt">
+      <button onclick="processFile()">Upload Text File</button>
+      <button onclick="downloadFile()">Download Processed Text</button>
 
-  <footer>© ꯲꯰꯲꯵ ꯑꯋꯥꯡꯕ ꯃꯉꯥꯡ</footer>
+      <hr>
 
-  <script src="script.js"></script>
+      <!-- Custom dictionary upload -->
+      <h3>📑 Upload Custom Dictionary</h3>
+      <input type="file" id="csvInput" accept=".csv">
+      <button onclick="uploadCSV()">Upload CSV Dictionary</button>
+      <button class="clear-btn" onclick="clearCustomDict()">Clear Custom Dictionary</button>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>© 2025 Awangbam Angang — GitHub Pages</footer>
+
+<script src="script.js"></script>
+<script>
+  // Toggle card content
+  function toggleCard(header) {
+    const content = header.nextElementSibling;
+    const icon = document.getElementById("toggleIcon");
+    if (content.style.display === "block") {
+      content.style.display = "none";
+      icon.textContent = "▼";
+    } else {
+      content.style.display = "block";
+      icon.textContent = "▲";
+    }
+  }
+</script>
+
 </body>
 </html>
